@@ -1,7 +1,8 @@
 class WordDistance {
 public:
     vector<string> wordlist;
-    WordDistance(vector<string> words) {
+    WordDistance(vector<string> words) {//use map would be better, map<string,vector<int>> like that
+                                        //read all word's position first
         wordlist.insert(wordlist.end(),words.begin(),words.end());
     }
     
