@@ -23,7 +23,7 @@ public:
         b=temp;
     }
     
-    //for example: perm({1,2,3,4})=1perm({2,3,4})+2perm({1,3,4})+3perm({1,2,4})+4perm(1,2,3) 
+    //for example: perm({1,2,3,4})=1perm({2,3,4})+2perm({1,3,4})+3perm({1,2,4})+4perm({1,2,3}) 
     void perm(vector<int>& nums,int low,int high){ 
         if(low==high)
             res.push_back(nums);
