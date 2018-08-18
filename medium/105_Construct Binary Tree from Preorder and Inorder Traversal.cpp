@@ -26,7 +26,7 @@ public:
         // 每次从 preorder 头部取一个值 mid，作为树的根节点
         // 检查 mid 在 inorder 中 的位置，则 mid 前面部分将作为 树的左子树，右部分作为树的右子树
 
-        if(root_index >= pend || istart >= pend)
+        if(root_index >= pend || istart >= iend)
             return NULL;
 
         int mid = preorder[root_index];
