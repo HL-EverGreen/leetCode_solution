@@ -17,7 +17,25 @@ public:
         return maxRec;
     }
 
-    int largestRectangleArea(vector<int> &height) { //not understand well, but could change to my solution(find largest rectangle in histogram)
+    int largestRectangleArea(vector<int> &height) { //use LC84 solution
+        //a more easy to understand version
+        int h_size=height.size(), res=0, temp, start_idx;
+        stack<int> sta;
+        if(h_size==0) return 0;
+        height.push_back(0);
+        for(int i=0;i<=h_size;i++){
+            while(sta.size()>0 && height[sta.top()]>=height[i]){
+                temp=height[sta.top()];
+                sta.pop();
+                start_idx=sta.empty()? -1 : sta.top();
+                res=max(res,temp*(i-start_idx-1));
+            }
+            sta.push(i);
+        }
+        return res;
+
+        //not easy to understand
+        /*
         stack<int> s;
         height.push_back(0);
         int maxSize = 0;
@@ -33,5 +51,6 @@ public:
             }
         }
         return maxSize;
+        */
     }
 };
