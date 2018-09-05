@@ -17,7 +17,7 @@ public:
         return maxRec;
     }
 
-    int largestRectangleArea(vector<int> &height) {
+    int largestRectangleArea(vector<int> &height) { //not understand well, but could change to my solution(find largest rectangle in histogram)
         stack<int> s;
         height.push_back(0);
         int maxSize = 0;
