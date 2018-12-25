@@ -1,13 +1,16 @@
 class Solution {
 public:
-    int maxArea(vector<int>& height) {//two directions
-        int left=0,right=height.size()-1,res=0;
-        while(left<=right){
-            if(height[left]<height[right]){
-                res=max(res,(right-left)*height[left]);
+    int maxArea(vector<int>& height) {
+        // Array
+        // Time complexity: O(n)
+        // Always keep the higher one
+        int left = 0, right = height.size() - 1, res = 0;
+        while(left < right) {
+            if(height[left] <= height[right]) {
+                res = max(res, (right - left) * height[left]);
                 left++;
-            }else{
-                res=max(res,(right-left)*height[right]);
+            } else {
+                res = max(res, (right - left) * height[right]);
                 right--;
             }
         }
