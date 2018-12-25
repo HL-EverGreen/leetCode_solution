@@ -13,7 +13,7 @@ public:
 
     // method 1
     // Time Complexity: O(n)
-    // Bottom up
+    // Top down 1
     int maxDepth(TreeNode* root) {
         if(root == nullptr) {
             return 0;
@@ -23,7 +23,7 @@ public:
     // method 2
     // Time complexity: O(n)
     // 4ms, beats 98.89%
-    // Top down
+    // Top down 2
     /*
     int maxDepth(TreeNode* root) {
         int max_depth = 0, cur_depth = 0;
