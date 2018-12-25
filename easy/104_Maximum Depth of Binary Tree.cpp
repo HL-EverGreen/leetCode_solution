@@ -9,19 +9,35 @@
  */
 class Solution {
 public:
-    int res=0;
-    int finalres=0;
+    // binary tree
+
+    // method 1
+    // Time Complexity: O(n)
+    // Bottom up
     int maxDepth(TreeNode* root) {
-        if(root){
-            res++;
-            if(res>finalres)
-                finalres=res;
-            int temp=res;
-            maxDepth(root->left);
-            res=temp;
-            maxDepth(root->right);
-            res=temp-1;
-        }
-        return finalres;
+        if(root == nullptr) {
+            return 0;
+        } else return 1 + max(maxDepth(root->left), maxDepth(root->right));
     }
+    
+    // method 2
+    // Time complexity: O(n)
+    // 4ms, beats 98.89%
+    // Top down
+    /*
+    int maxDepth(TreeNode* root) {
+        int max_depth = 0, cur_depth = 0;
+        curMaxDepth(root, max_depth, cur_depth);
+        return max_depth;
+    }
+    
+    void curMaxDepth(TreeNode* root, int& max_depth, int cur_depth) {
+        if(root != nullptr) {
+            cur_depth++;
+            max_depth = max(max_depth, cur_depth);
+            curMaxDepth(root->left, max_depth, cur_depth);
+            curMaxDepth(root->right, max_depth, cur_depth);
+        }
+    }
+    */
 };
