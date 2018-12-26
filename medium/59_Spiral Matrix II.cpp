@@ -1,31 +1,31 @@
 class Solution {
 public:
-    vector<vector<int> > generateMatrix(int n) {
-        vector<vector<int> > vv(n, vector<int>(n));
-    
-        int rowStart = 0, rowEnd = n - 1;
-        int colStart = 0, colEnd = n - 1;
-        int cnt = 1;
-    
-        while(rowStart <= rowEnd && colStart <= colEnd)
-        {
-            for(int i = colStart; i<= colEnd; i++)
-                vv[rowStart][i] = cnt++;
-            rowStart++;
+    vector<vector<int>> generateMatrix(int n) {
+        // array
+        // time complexity: O(n^2)
+        // 0ms, beats 100.00%
         
-            for(int i = rowStart; i<= rowEnd; i++)
-                vv[i][colEnd] = cnt++;
-            colEnd--;
+        vector<vector<int>> matrix(n, vector<int>(n, 0));
+        int row_start = 0, row_end = n - 1, col_start = 0, col_end = n - 1, val = 1;
         
-            for(int i = colEnd; i>= colStart; i--)
-                vv[rowEnd][i] = cnt++;
-            rowEnd--;
-        
-            for(int i = rowEnd; i>= rowStart; i--)
-                vv[i][colStart] = cnt++;
-            colStart++;
+        while(row_start <= row_end && col_start <= col_end) {
+            for(int i = col_start; i <= col_end; i++) {
+                matrix[row_start][i] = val++;
+            }
+            row_start++;
+            for(int i = row_start; i <= row_end; i++) {
+                matrix[i][col_end] = val++;
+            }
+            col_end--;
+            for(int i = col_end; i >= col_start; i--) {
+                matrix[row_end][i] = val++;
+            }
+            row_end--;
+            for(int i = row_end; i >= row_start; i--) {
+                matrix[i][col_start] = val++;
+            }
+            col_start++;
         }
-    
-        return vv;
+        return matrix;
     }
 };
