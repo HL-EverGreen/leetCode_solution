@@ -1,13 +1,14 @@
 class Solution {
 public:
-    bool canJump(vector<int>& nums) {//update_continually_rather_than_DP
-        //update maximum reach range continually, if reach area >= nums.size()-1, return true
-        //time complexity: O(n)
-        int reach=0, i=0, n_size=nums.size();
-        for(;i<n_size-1 && i<=reach;i++){
-            reach=max(reach, i+nums[i]);
+    bool canJump(vector<int>& nums) {
+        // array
+        // time complexity: O(n)
+        // update max_reach range continually, and compare max_reach with the destination
+        int max_reach = 0, n_size = nums.size();
+        for(int i = 0; i < n_size - 1 && i <= max_reach; i++) {
+            max_reach = max(max_reach, nums[i] + i);
         }
-        return reach>=n_size-1;
+        return max_reach >= n_size - 1;
         
         //dp
         //time complexity: O(n^2), very time-consuming
