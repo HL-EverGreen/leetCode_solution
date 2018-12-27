@@ -1,22 +1,36 @@
 class Solution {
 public:
-    bool exist(vector<vector<char>>& board, string word) { //dfs
-        row=board.size(), col=row?board[0].size():0;
-        if(col==0) return false;
-        for(int i=0;i<row;i++)
-            for(int j=0;j<col;j++)
-                if(isFound(board,word.c_str(),i,j)) return true;    //transfer const *char instead of string can save quantity of time
+    bool exist(vector<vector<char>>& board, string word) {
+        // array & DFS
+        // time complexity: O(n^2)
+        // 16ms, beats 90.92%
+        
+        // dfs, use const char* to manipulate target string more convenient (word + 1)
+        int row = board.size(), col = (row == 0 ? 0 : board[0].size());
+        if(col == 0) { return false; }
+        
+        for(int i = 0; i < row; i++) {
+            for(int j = 0; j < col; j++) {
+                if(checkWord(board, word.c_str(), i, j, row, col)) { return true; }
+            }
+        }
         return false;
     }
     
-private:
-    int row,col;
-    bool isFound(vector<vector<char>>& board, const char* word, int x, int y){
-        if(*word=='\0') return true;
-        if(x<0 || x>=row || y<0 || y>=col || board[x][y]!=*word || board[x][y]=='0') return false;
-        board[x][y]='0';
-        if(isFound(board,word+1,x+1,y) || isFound(board,word+1,x-1,y) || isFound(board,word+1,x,y+1) || isFound(board,word+1,x,y-1)) return true;
-        board[x][y]=*word;
+    // DFS part
+    bool checkWord(vector<vector<char>>& board, const char* word, int i, int j, int row, int col) {
+        if(*word == '\0') { // if reach the end of the word, then find it
+            return true; 
+        } else if(i < 0 || i == row || j < 0 || j == col || board[i][j] != *word || board[i][j] == '0') { 
+            return false; 
+        }
+
+        board[i][j] = '0';
+        if(checkWord(board, word + 1, i + 1, j, row, col) || checkWord(board, word + 1, i, j + 1, row, col) || checkWord(board, word + 1, i - 1, j, row, col) || checkWord(board, word + 1, i, j - 1, row, col)) {
+            return true;
+        }
+
+        board[i][j] = *word;
         return false;
     }
 };
