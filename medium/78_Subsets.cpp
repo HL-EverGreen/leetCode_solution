@@ -1,19 +1,24 @@
 class Solution {
 public:
-    vector<vector<int>> res;
-    vector<int> temp;    
     vector<vector<int>> subsets(vector<int>& nums) {
-        int index=0;
-        dfs(nums,temp,index);
+        // array & dfs
+        // time complexity: O(2^n)
+        // 4ms, beats 100.00%
+        
+        // DFS
+        vector<vector<int>> res;
+        vector<int> subset;
+        generateAllSubsets(res, subset, nums, 0);
         return res;
-        }
+    }
     
-    void dfs(vector<int>& nums, vector<int>& temp, int index){//dfs
-        res.push_back(temp);
-        for(int i=index;i<nums.size();i++){
-            temp.push_back(nums[i]);
-            dfs(nums,temp,i+1);
-            temp.pop_back();
+    // DFS part
+    void generateAllSubsets(vector<vector<int>>& res, vector<int>& subset, vector<int>& nums, int start) {
+        res.push_back(subset);
+        for(int i = start; i < nums.size(); i++) {
+            subset.push_back(nums[i]);
+            generateAllSubsets(res, subset, nums, i + 1);   // notice: not $start + 1$
+            subset.pop_back();
         }
     }
 };
