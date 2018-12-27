@@ -1,13 +1,18 @@
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
-        //a more simple two index method, beats 100%
-        int i=0;
-        for(auto n:nums){
-            if(i<2||n>nums[i-2])
-                nums[i++]=n;
+        // array
+        // 8ms, beats 100%
+        
+        // compare new element to the n-2 element in the current array
+        int cur_len = 0;
+        for(auto num:nums) {
+            if(cur_len < 2 || num > nums[cur_len - 2]) {
+                nums[cur_len++] = num;
+            }
         }
-        return i;
+        return cur_len;
+        
         
         //traditional two index method, beats 100%(actually the variable i is not necessary, 
         //we can use nums[len]=num instead of swap(nums[len],nums[i]) )
