@@ -1,12 +1,17 @@
 class Solution {
 public:
     vector<int> getRow(int rowIndex) {
-        //The basic idea is to iteratively update the array from the end to the beginning.
-        vector<int> res(rowIndex+1,0);
-        res[0]=1;
-        for(int i=1;i<rowIndex+1;i++)
-            for(int j=i;j>=1;j--)
-                res[j]+=res[j-1];
-        return res;
+        // array
+        // time complexity: O(n^2), space complexity: O(n)
+        // 0ms, beats 100%
+        
+        // add up in place from right to left
+        vector<int> new_line(rowIndex + 1, 1);
+        for(int iter = 1; iter < rowIndex; iter++) {
+            for(int pos = iter; pos >= 1; pos--) {
+                new_line[pos] = new_line[pos] + new_line[pos - 1]; 
+            }
+        }
+        return new_line;
     }
 };
