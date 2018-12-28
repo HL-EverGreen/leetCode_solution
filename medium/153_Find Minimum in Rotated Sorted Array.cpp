@@ -1,43 +1,21 @@
 class Solution {
 public:
-    int findMin(vector<int>& nums) {//partition
-        if(nums.size()==1)
-            return nums[0];
-        int low=0,high=nums.size()-1,temp=0;
-        while(high>low){
-            temp=(low+high)/2;
-            if(nums[temp]>nums[temp+1])
-                return nums[temp+1];
-            if(temp==low)
-                break;
-            if(nums[temp]>=nums[0]){
-                low=temp+1;
-            }
-            else if(nums[temp]<nums[0]){
-                high=temp;
-            }
-        }
-        return nums[0];
-    }
-    //more concise version
-    /*
-     int findMin(vector<int> &num) {
-        int start=0,end=num.size()-1;
+    int findMin(vector<int>& nums) {
+        // array & binary search
+        // time complexity: O(logn), space complexity: O(1)
+        // 0ms, beats 100%
         
-        while (start<end) {
-            if (num[start]<num[end])
-                return num[start];
+        int left = 0, right = nums.size() - 1;
+        while(left < right) {
+            if(nums[left] < nums[right]) { return nums[left]; }
             
-            int mid = (start+end)/2;
-            
-            if (num[mid]>=num[start]) {
-                start = mid+1;
+            int mid = left + (right - left) / 2;
+            if(nums[mid] < nums[right]) {
+                right = mid;
             } else {
-                end = mid;
+                left = mid + 1;
             }
         }
-        
-        return num[start];
+        return nums[left];
     }
-    */
 };
