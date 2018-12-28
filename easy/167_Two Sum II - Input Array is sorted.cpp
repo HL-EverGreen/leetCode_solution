@@ -1,32 +1,22 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& numbers, int target) {
+        // array
+        // time complexity: O(n), space complexity: O(1)
+        // 4ms, beats 99.06%
+        
+        // two pointers
+        int left = 0, right = numbers.size() - 1;
         vector<int> res;
-        if(numbers.size()<=1)
-            return res;
-        int index1=0;
-        int index2=1;
-        while(numbers[index1]+numbers[index2]!=target){
-            while(numbers[index1]+numbers[index2]<target){
-                index2++;
-            }
-            if(numbers[index1]+numbers[index2]==target){
-                res.push_back(index1+1);
-                res.push_back(index2+1);
+        while(left < right) {
+            if(numbers[left] + numbers[right] == target) {
+                res.push_back(left + 1);
+                res.push_back(right + 1);
                 return res;
-            }
-            index1++;
-            while(numbers[index1]+numbers[index2]>target){
-                index2--;
-            }
-            if(numbers[index1]+numbers[index2]==target){
-                res.push_back(index1+1);
-                res.push_back(index2+1);
-                return res;
-            }
+            } else if(numbers[left] + numbers[right] > target) {
+                right--;
+            } else { left++; }
         }
-        res.push_back(index1+1);
-        res.push_back(index2+1);
         return res;
     }
 };
