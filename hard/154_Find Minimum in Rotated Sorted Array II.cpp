@@ -17,12 +17,12 @@ public:
                 return nums[left];
             }
             int mid = left + (right - left) / 2;
-            
+
             if(nums[mid] > nums[right]) {           // case 3
                 left = mid + 1;
             } else if(nums[mid] < nums[right]) {    // case 2
                 right = mid;
-            } else { right --; }                    // case 4
+            } else { right--; }                     // case 4
         }
         return nums[left];
     }
