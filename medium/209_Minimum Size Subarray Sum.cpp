@@ -1,16 +1,20 @@
 class Solution {
 public:
-    int minSubArrayLen(int s, vector<int>& nums) {//sliding window
-        //slide window
-        //O(n) time complexity
-        int n_size=nums.size(),sum=0,start=0,res=INT_MAX;
-        for(int i=0;i<n_size;i++){
-            sum+=nums[i];
-            while(sum>=s){
-                res=min(res,i-start+1);
-                sum-=nums[start++];
+    int minSubArrayLen(int s, vector<int>& nums) {
+        // array
+        // time complexity: O(n), space complexity: O(1)
+        // 8ms, beats 98.98%
+        
+        // slide window
+        int size = nums.size(), front = 0, back = 0, sum = 0, res = size + 1;
+        
+        for(; back < size; back++) {
+            sum += nums[back];
+            while(sum >= s) {
+                res = min(res, back - front + 1);
+                sum -= nums[front++];
             }
         }
-        return res>n_size?0:res;
+        return res > size ? 0 : res;
     }
 };
