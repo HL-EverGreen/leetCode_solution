@@ -1,23 +1,27 @@
 class Solution {
 public:
     vector<vector<int>> combinationSum3(int k, int n) {
+        // array & DFS
+        // time complexity: O(n^3), space complexity: O(n)
+        // 0ms, beats 100%
+        
         vector<vector<int>> res;
-        vector<int> ans;
-        findCombinationSum(res,ans,1,k,n,0);
+        vector<int> group;
+        findCombination(res, group, 1, n, k);
         return res;
     }
     
-    void findCombinationSum(vector<vector<int>> &res, vector<int> &ans, int start, int k, int n, int sum){
-        if(ans.size()==k&&sum==n){
-            res.push_back(ans);
+    // DFS part
+    void findCombination(vector<vector<int>>& res, vector<int>& group, int cur, int remain, int num) {
+        if(group.size() == num && remain == 0) {
+            res.push_back(group);
             return;
         }
-        else if(ans.size()>k || sum>n) return;
-        
-        for(int i=start;i<=9;i++){
-            ans.push_back(i);
-            findCombinationSum(res,ans,i+1,k,n,sum+i);
-            ans.pop_back();
+        for(int i = cur; i <= 9; i++) {
+            if(remain < i) { return; }
+            group.push_back(i);
+            findCombination(res, group, i + 1, remain - i, num);
+            group.pop_back();
         }
     }
 };
