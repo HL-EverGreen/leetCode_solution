@@ -1,24 +1,36 @@
 class Solution {
 public:
-    vector<int> searchRange(vector<int>& nums, int target) { //binary_search
-        int low=0,high=nums.size(),mid,left,right;
-        while(low<high){ //find the index of the most left element equals to target, or index of the least element bigger than target
-            mid=low+(high-low)/2;
-            if(nums[mid]>=target) high=mid;
-            else low=mid+1;
+    vector<int> searchRange(vector<int>& nums, int target) {
+        // array & binary search
+        // time complexity: O(n), space complexity: O(1)
+        // 4ms, beats 100%
+        
+        // two binary search
+        // first binary search: find index of first element >= target
+        // second binary search: find index of first element > target
+        // if index1 = index2, then no target exists in array
+        
+        int low, high, left = 0, right = nums.size();   // use nums.size() rather than nums.size() - 1 !!! because $right$ may need equal to nums.size()
+        
+        while(left < right) {
+            int mid = left + (right - left) / 2;
+            if(nums[mid] >= target) {
+                right = mid;
+            } else { left = mid + 1; }
         }
         
-        left=low;
-        low=0,high=nums.size();
+        low = left;
+        left = 0;
+        right = nums.size();
         
-        while(low<high){ //find (index+1) of the most right element equals to target, or index of the least element bigger than target
-            mid=low+(high-low)/2;
-            if(nums[mid]<=target) low=mid+1;
-            else high=mid;
+        while(left < right) {
+            int mid = left + (right - left) / 2;
+            if(nums[mid] > target) {
+                right = mid;
+            } else { left = mid + 1;}
         }
-        right=low;
-        //if right==left, means that can't find element equals to target in #nums#
-        //if there is only one element equals to target, that would have: right=left+1
-        return left==right?vector<int>({-1,-1}):vector<int>({left,right-1});
+        
+        high = left;
+        return (low == high ? vector<int>({-1, -1}) : vector<int>({low, high - 1}));
     }
 };
