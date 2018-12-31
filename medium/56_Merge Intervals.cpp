@@ -9,15 +9,22 @@
  */
 class Solution {
 public:
-    vector<Interval> merge(vector<Interval>& intervals) {//sort object vector
-        int i_size=intervals.size();
-        if(i_size<=1) return intervals;
-        sort(intervals.begin(),intervals.end(),[](Interval a, Interval b){return a.start<b.start;}); //can't #return a.start<=b.start#
+    vector<Interval> merge(vector<Interval>& intervals) {
+        // array
+        // time complexity: O(n), space complexity: O(n)
+        // 8ms, beats 99.40%
+        
+        if(intervals.empty()) { return intervals; }
         vector<Interval> res;
+        sort(intervals.begin(), intervals.end(), [](Interval a, Interval b){ return a.start < b.start; });
+        
         res.push_back(intervals[0]);
-        for(int i=1;i<i_size;i++){
-            if(intervals[i].start>res.back().end) res.push_back(intervals[i]);
-            else res.back().end=max(intervals[i].end,res.back().end);
+        for(auto inter : intervals) {
+            if(inter.start > res.back().end) {
+                res.push_back(inter);
+            } else {
+                res.back().end = max(res.back().end, inter.end);
+            }
         }
         return res;
     }
