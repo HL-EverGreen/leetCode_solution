@@ -1,26 +1,26 @@
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-       /*
-        map<int,int> myMap;
-        for(int num:nums){
-            if(myMap.find(num)!=myMap.end())
+        // array
+        // time complexity: O(n), space complexity: O(n)
+        // 24ms, beats 80.55%
+        
+        // method 1
+        // set.size() != nums.size() ? true : false
+        return nums.size() != unordered_set<int>(nums.begin(), nums.end()).size();
+        
+        
+        // method 2
+        // use set
+        /*
+        unordered_set<int> count;
+        for(int num : nums) {
+            if(count.find(num) != count.end()) {
                 return true;
-            else myMap[num]=1;
+            }
+            count.insert(num);
         }
         return false;
         */
-        
-        //use set
-        //return nums.size()!=unordered_set<int>(nums.begin(),nums.end()).size();
-        
-        //use set instead of map when we don't care the frequency of the numbers
-        unordered_set<int> link;
-        for(int num:nums){
-            if(link.find(num)!=link.end())
-                return true;
-            link.insert(num);
-        }
-        return false;
     }
 };
