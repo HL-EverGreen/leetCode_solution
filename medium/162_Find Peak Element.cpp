@@ -1,17 +1,20 @@
 class Solution {
 public:
-    int findPeakElement(vector<int>& nums) {//binary search
-        //O(log(n))
-        int left = 0;
-        int right = nums.size()-1;
-        while(left<right){
-            int mid = (right+left)/2;
-            if(nums[mid]<nums[mid+1]){
-                left = mid+1;
+    int findPeakElement(vector<int>& nums) {
+        // array & binary search
+        // time complexity: O(logn), space complexity: O(1)
+        // 4ms, beats 99.1%
+        
+        int left = 0, right = nums.size() - 1;
+        while(left < right) {
+            int mid = left + (right - left) / 2;
+            if(nums[mid] < nums[mid + 1]) {
+                left = mid + 1;
+            } else {
+                right = mid;
             }
-            else right = mid;
         }
-        return left;//return right; is same
+        return left;
         
         //O(n)
         /*
