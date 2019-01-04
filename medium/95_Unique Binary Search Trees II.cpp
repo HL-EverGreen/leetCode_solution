@@ -9,48 +9,85 @@
  */
 class Solution {
 public:
-    vector<TreeNode*> generateTrees(int n) {//dp
-        if(n==0) return vector<TreeNode*>();
-        vector<TreeNode*> res(1,nullptr);
-        for(int i=1;i<=n;i++){
-            vector<TreeNode*> tmp; //each round use all old trees in #res# to generate new tree and store in #tmp#, then res=tmp
-            for(int j=0;j<res.size();j++){
-                TreeNode* old_root=res[j]; 
-                TreeNode* new_root=new TreeNode(i);
-                TreeNode* cl_old_root=clone(old_root);
-                new_root->left=cl_old_root;
-                tmp.push_back(new_root); //use new node as root
-                
-                if(old_root){
-                    TreeNode* tmp_old=old_root;
-                    while(tmp_old->right){ 
-                        TreeNode* new_root1=new TreeNode(i); //insert new node in the old tree(not use as root)
-                        TreeNode* tmp_right=tmp_old->right;
-                        
-                        tmp_old->right=new_root1;  //insert at every (root->right) position and move the original right subtree to left subtree of the new node
-                        new_root1->left=tmp_right;
-                        TreeNode* cl_old_root=clone(old_root);
-                        tmp.push_back(cl_old_root);
-                        
-                        tmp_old->right=tmp_right; //recover the tree
-                        tmp_old=tmp_old->right;
-                    }
-                    tmp_old->right=new TreeNode(i); //insert the new node at the rightest position
-                    TreeNode* cl_old_root=clone(old_root);
-                    tmp.push_back(cl_old_root);
-                    tmp_old->right=nullptr;
+    // method 1
+    // recursive
+    // 8ms, beats 100%
+    vector<TreeNode*> generateTrees(int n) {
+        if(n <= 0) { return {}; }
+        return generateTrees(1, n);
+    }
+    
+    vector<TreeNode*> generateTrees(int left, int right) {
+        if(left > right) { return {nullptr}; }
+        else if(left == right) {
+            TreeNode* tmp = new TreeNode(left);
+            return {tmp};
+        }
+        vector<TreeNode*> result;
+        for(int i = left; i <= right; i++) {
+            vector<TreeNode*> left_sub = generateTrees(left, i - 1);
+            vector<TreeNode*> right_sub = generateTrees(i + 1, right);
+            for(auto l_sub : left_sub) {
+                for(auto r_sub : right_sub) {
+                    TreeNode* root = new TreeNode(i);
+                    root -> left = l_sub;
+                    root -> right = r_sub;
+                    result.push_back(root);
                 }
             }
-            res=tmp; //update #res# after each round
+        }
+        return result;
+    }
+    
+    
+    
+    // method 2
+    // dynamic programming
+    // 8ms, beats 100%
+    /*
+    vector<TreeNode*> generateTrees(int n) {        
+        if(n == 0) { return vector<TreeNode*>(); }
+        vector<TreeNode*> res(1, nullptr);
+        
+        for(int i = 1; i <= n; i++) {
+            vector<TreeNode*> cur;                                       // each round use all old trees in $res$ to generate new tree and store in $cur$, then res = cur
+            for(int j = 0; j < res.size(); j++) {
+                TreeNode* new_root = new TreeNode(i);                    // insert new node as a root 
+                TreeNode* old_root = cloneTree(res[j]);
+                new_root -> left = old_root;
+                cur.push_back(new_root);
+                
+                if(res[j] != nullptr) {
+                    TreeNode* cur_root = old_root;
+                    while(cur_root -> right != nullptr) {               // insert at every (root->right) position and move the original right subtree to left subtree of the new node
+                        TreeNode* temp_right_tree = cur_root -> right;
+                        new_root = new TreeNode(i);
+                        
+                        cur_root -> right = new_root;
+                        new_root -> left = temp_right_tree;
+                        TreeNode* cl_old_root = cloneTree(old_root);
+                        cur.push_back(cl_old_root);
+                        
+                        cur_root -> right = temp_right_tree;            // recover past tree in result
+                        cur_root = cur_root -> right;
+                    }
+                    cur_root -> right = new TreeNode(i);                // insert the new node at the rightest position
+                    TreeNode* cl_old_root = cloneTree(old_root);
+                    cur.push_back(cl_old_root);
+                    cur_root -> right = nullptr;                        // recover past tree in result
+                }
+            }
+            res = cur;
         }
         return res;
     }
     
-    TreeNode* clone(TreeNode* root){ //return the same tree with new root which has a different pointer address
-        if(!root) return nullptr;
-        TreeNode* new_root=new TreeNode(root->val);
-        new_root->left=clone(root->left);
-        new_root->right=clone(root->right);
+    TreeNode* cloneTree(TreeNode* root) {                   // deep copy, return the same tree with new root which has a different pointer address
+        if(!root) { return nullptr; }
+        TreeNode* new_root = new TreeNode(root -> val);
+        new_root -> left = cloneTree(root -> left);
+        new_root -> right = cloneTree(root -> right);
         return new_root;
     }
+    */
 };
