@@ -1,21 +1,25 @@
 class Solution {
 public:
-    int rob(vector<int>& nums) {//dp
-        //the main idea is using two dp, one excludes the first element, and the another excludes the last element
-        //then return the max value of two dp
-        int size=nums.size();
-        if(size==0) return 0;
-        else if(size==1) return nums[0];
-        else if(size==2) return max(nums[0],nums[1]);
+    int rob(vector<int>& nums) {
+        // dynamic programming
+        // time complexity: O(n), space complexity: O(1)
+        // 4ms, beats 100%
         
-        vector<int> res1(size-1,0),res2(size-1,0);
-        res1[0]=nums[0];res1[1]=max(nums[0],nums[1]);
-        res2[0]=nums[1],res2[1]=max(nums[1],nums[2]);
-        
-        for(int i=2;i<size-1;i++){
-            res1[i]=max(res1[i-1],res1[i-2]+nums[i]);
-            res2[i]=max(res2[i-1],res2[i-2]+nums[i+1]);
+        // this problem can be divided into two subproblems (House Robber I), with index from 0 to size - 2 and 1 to size - 1 respectively
+        // then return the max value of two DP
+        int size = nums.size();
+        if(size < 2) { return size ? nums[0] : 0; }
+        return max(rob(nums, 0, size - 2), rob(nums, 1, size - 1));
+    }
+    
+    // bottom up with two variables
+    int rob(vector<int>& nums, int start, int end) {
+        int prev = 0, cur = 0, res = 0;
+        for(int i = start; i <= end; i++) {
+            res = max(prev + nums[i], cur);
+            prev = cur;
+            cur = res;
         }
-        return max(res1[size-2],res2[size-2]);
+        return res;
     }
 };
