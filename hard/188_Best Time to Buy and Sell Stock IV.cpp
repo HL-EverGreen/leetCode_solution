@@ -87,6 +87,7 @@ public:
             res = accumulate(profits.begin(), profits.end(), 0);
         } else {
             nth_element(profits.begin(), profits.end() - k, profits.end());                     // time complexity: O(n)
+                                                                                                // nth_element, 把正确大小的数字放在指定位置，该数字后的数字都比他大，该数字前的数字都比他小，也可自己加greater<int>比较函数使大的在前
             res = accumulate(profits.end() - k, profits.end(), 0);                              // 计算最大的k个的元素的和
         }
         return res;
