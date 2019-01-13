@@ -1,21 +1,28 @@
 class Solution {
 public:
-    string convert(string s, int numRows) { //string
-        //use vector
-        if(s.size() == 0 || numRows <= 0) return "";
-        if(numRows == 1) return s;
+    string convert(string s, int numRows) {
+        // string
+        // time complexity: O(n), space complexity: O(n)
+        // 16ms, beats 93.56%
+        
+        if(numRows <= 0) { return ""; }
+        else if(numRows == 1) { return s; }
+        
         vector<string> rcv(numRows, "");
-        int cur = 0;
-        bool flag = true;
-        for(char ch:s){
-            rcv[cur] += ch;
-            if(cur == 0) flag = true;
-            if(cur == numRows - 1) flag = false;
-            if(flag) cur++;
-            else cur--;
-        }
+        int cur_idx = 0;
+        bool down = true;                   // whether next step go down or not
         string res;
-        for(auto elem:rcv) res += elem;
+        for(auto ch : s) {
+            rcv[cur_idx] += ch;
+            if(cur_idx == 0) { down = true; } 
+            else if(cur_idx == numRows - 1) { down = false; }
+            if(down) { cur_idx++; } 
+            else { cur_idx--; }
+        }
+        
+        for(auto elem : rcv) {
+            res += elem;
+        }
         return res;
 
         //use new
