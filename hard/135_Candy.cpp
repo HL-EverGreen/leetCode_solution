@@ -1,14 +1,26 @@
 class Solution {
 public:
-    int candy(vector<int>& ratings) {  //allocate_number
-        int size=ratings.size(), res=0;
-        if(size<2) return size;
-        vector<int> num(size,1);
-        for(int i=1;i<size;i++)                             //from left
-            if(ratings[i]>ratings[i-1]) num[i]=num[i-1]+1;
-        for(int i=size-2;i>=0;i--)                          //from right
-            if(ratings[i]>ratings[i+1]) num[i]=max(num[i],num[i+1]+1);
-        for(auto n:num) res+=n;
+    int candy(vector<int>& ratings) {
+        // array
+        // time complexity: O(n), space complexity: O(n)
+        // 24ms, beats 98.93%
+        
+        // two turns, one from left to right and one from right to left
+        int num = ratings.size(), res = 0;
+        vector<int> candy(num, 1);
+        if(num < 2) { return num; }
+        
+        for(int i = 1; i < num; i++) {
+            if(ratings[i] > ratings[i - 1]) { candy[i] = candy[i - 1] + 1; }
+        }
+        
+        for(int i = num - 2; i >= 0; i--) {
+            if(ratings[i] > ratings[i + 1]) { candy[i] = max(candy[i], candy[i + 1] + 1); }
+        }
+        
+        for(auto n : candy) {
+            res += n;
+        }
         return res;
     }
 };
