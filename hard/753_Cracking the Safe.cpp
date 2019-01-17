@@ -6,6 +6,8 @@ public:
         
         // Each time visit a n-length password, next time visit password = current password.substr(1) + new_char in range(0, k)
         // The minimum length of total password is k^n + n - 1, when password reaches this length, stop and return
+
+        // string.erase(pos, len), Erases the portion of the string value that begins at the character position pos and spans len characters (or until the end of the string, if either the content is too short or if len is string::npos.
         string pwd = "", cur = "";
         for(int i = 0; i < n; i++) { cur += '0';  pwd = cur; }
         int max_num = pow(k, n) + n - 1;
