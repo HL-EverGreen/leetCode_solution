@@ -15,7 +15,7 @@ public:
         }
         return true;
         
-        // another style
+        // another style, much more better
         /*
         int si = 0, ti = 0, sSize = s.length(), tSize = t.length();
         for(; ti < tSize && si < sSize; ti++) {
