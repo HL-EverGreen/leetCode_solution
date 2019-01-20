@@ -18,9 +18,8 @@ public:
         // another style
         /*
         int si = 0, ti = 0, sSize = s.length(), tSize = t.length();
-        for(; ti < tSize; ti++) {
+        for(; ti < tSize && si < sSize; ti++) {
             if(t[ti] == s[si]) si++;
-            if(si == sSize) return true;
         }
         return si == sSize;
         */
