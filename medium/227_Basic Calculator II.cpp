@@ -1,20 +1,24 @@
 class Solution {
 public:
-    int calculate(string s) { //calculator
-        istringstream in('+'+s+'+');
-        long long term=0,n=0,total=0;
+    int calculate(string s) {
+        // string
+        // time complexity: O(n), space complexity: O(1)
+        // 12ms, beats 98.97%
+        
+        istringstream sin('+' + s + '+');
         char op;
-        while(in>>op){
-            if(op=='+' || op=='-'){
-                total+=term;
-                in>>term;
-                term*=(op=='+'?1:-1);
-            }else{
-                in>>n;
-                if(op=='*') term*=n;
-                else term/=n;
+        int res = 0, term = 0, next;
+        while(sin >> op) {
+            if(op == '+' || op == '-') {
+                res += term;
+                sin >> term;
+                term *= (op == '+' ? 1 : -1);
+            } else {
+                sin >> next;
+                if(op == '*') term *= next;
+                else term /= next;
             }
         }
-        return total;
+        return res;
     }
 };
