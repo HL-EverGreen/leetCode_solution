@@ -1,12 +1,16 @@
 class Solution {
 public:
-    bool isIsomorphic(string s, string t) {//array
-        int size_s=s.size(),size_t=t.size();
-        if(size_s!=size_t) return false;
-        int arr_s[128]={0},arr_t[128]={0};
-        for(int i=0;i<size_s;i++){
-            if(arr_s[s[i]]!=arr_t[t[i]]) return false;
-            arr_s[s[i]]=arr_t[t[i]]=i+1;
+    bool isIsomorphic(string s, string t) {
+        // string & hash table
+        // time complexity: O(n), space complexity: O(1)
+        // 4ms, beats 99.22%
+        
+        // Use a hash map for both s and t to record character's position
+        if(s.length() != t.length()) return false;
+        int sTable[128] = {0}, tTable[128] = {0};
+        for(int i = 0; i < s.length(); i++) {
+            if(sTable[s[i]] != tTable[t[i]]) return false;      
+            sTable[s[i]] = tTable[t[i]] = i + 1;                // record current character's last occurence position
         }
         return true;
     }
