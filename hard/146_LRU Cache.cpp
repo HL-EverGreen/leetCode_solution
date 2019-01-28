@@ -1,25 +1,31 @@
 class LRUCache {
 public:
-    LRUCache(int capacity): _capacity(capacity) {} //hash table & list
+    // LRU & map & iterator
+    // put complexity: O(n), get complexity: O(1)
+    // 56ms, beats 98.48%
+    
+    LRUCache(int capacity) {
+        _capacity = capacity;
+    }
     
     int get(int key) {
-        auto iter = cache.find(key);
-        if(iter == cache.end()) return -1;
-        touch(iter);
-        return iter->second.first;
+        auto it = cache.find(key);
+        if(it == cache.end()) return -1;
+        touch(it);
+        return it->second.first;
     }
     
     void put(int key, int value) {
-        auto iter = cache.find(key);
-        if(iter != cache.end()) touch(iter);
-        else{
-            if(cache.size() == _capacity){
-                cache.erase(used_list.back());
-                used_list.pop_back();
+        auto it = cache.find(key);
+        if(it != cache.end()) touch(it);
+        else {
+            if(cache.size() == _capacity) {
+                cache.erase(elem_list.back());
+                elem_list.pop_back();
             }
-            used_list.push_front(key);
+            elem_list.push_front(key);
         }
-        cache[key] = {value, used_list.begin()};
+        cache[key] = {value, elem_list.begin()};            // case of updating value
     }
     
 private:
@@ -27,17 +33,18 @@ private:
     typedef pair<int, LI::iterator> PII;
     typedef unordered_map<int, PII> MIPII;
     
-    LI used_list;
-    MIPII cache;
-    int _capacity;
+    LI elem_list;                                           // used to store all elements
+    MIPII cache;                                            // cache
+    int _capacity;                                          // capacity
     
-    void touch(MIPII::iterator iter){
-        int key = iter -> first;
-        used_list.erase(iter->second.second);
-        used_list.push_front(key);
-        iter->second.second = used_list.begin();
+    void touch(MIPII::iterator it) {                        // move the used one to the front of the element list, and update cache
+        int key = it->first;
+        elem_list.erase(it->second.second);
+        elem_list.push_front(key);
+        it->second.second = elem_list.begin();
     }
 };
+
 /**
  * Your LRUCache object will be instantiated and called as such:
  * LRUCache obj = new LRUCache(capacity);
