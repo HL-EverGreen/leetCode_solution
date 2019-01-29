@@ -8,21 +8,23 @@
  */
 class Solution {
 public:
-    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {//String all pearls with one needle
-        ListNode* newList=new ListNode(0);
-        ListNode* res=newList;
-        while(l1&&l2){
-            if(l1->val<=l2->val){
-                newList->next=l1;
-                l1=l1->next;
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        // list
+        // time complexity: O(n), space complexity: O(1)
+        // 4ms, beats 100%
+        
+        ListNode* dummy = new ListNode(0), *tail = dummy;
+        while(l1 && l2) {
+            if(l1->val < l2->val) {
+                tail->next = l1;
+                l1 = l1->next;
+            } else {
+                tail->next = l2;
+                l2 = l2->next;
             }
-            else{
-                newList->next=l2;
-                l2=l2->next;
-            }
-            newList=newList->next;
+            tail = tail->next;
         }
-        newList->next=l1?l1:l2;
-        return res->next;
+        tail->next = l1 ? l1 : l2;
+        return dummy->next;
     }
 };
