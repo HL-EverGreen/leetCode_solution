@@ -21,15 +21,28 @@ public:
         }
         return res;
         
+        
         // Much more simple solution
-        // First pass record the last position for each letter. 
+        // string & greedy
+        // time complexity: O(n), space complexity: O(1)
+        // 4ms, beats 99.4%
+        
+        // Main idea: First pass record the last position for each letter. 
         // Second pass we keep the maximum position of the letters we have seen so far. If the pointer exceeds the maximum position, we found the part.
         /*
-        vector<int> res, pos(26, 0);  
-        for (auto i = 0; i < S.size(); ++i) pos[S[i] - 'a'] = i;
-        for (auto i = 0, idx = INT_MIN, last_i = 0; i < S.size(); ++i) {
-            idx = max(idx, pos[S[i] - 'a']);
-            if (idx == i) res.push_back(i - exchange(last_i, i + 1) + 1);
+        int sSize = S.length(), pos[26] = {0};
+        for(int i = 0; i < sSize; i++) {
+            pos[S[i] - 'a'] = i;
+        }
+        
+        vector<int> res;
+        int max_range = 0, last = -1;
+        for(int i = 0; i < sSize; i++) {
+            max_range = max(max_range, pos[S[i] - 'a']);
+            if(max_range == i) {
+                res.push_back(i - last);
+                last = i;
+            }
         }
         return res;
         */
