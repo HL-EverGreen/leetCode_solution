@@ -1,18 +1,20 @@
-class MinStack { //stack
+class MinStack {
 public:
     /** initialize your data structure here. */
-    
-    //can also use stack<pair<int,int>> mySta;
-    vector<int> minStack;
-    vector<int> minElem;
+
+    // stack
+    // push/pop/top/getMin time complexity: O(1)
+    // 16ms, beats 99%
+
+    // main idea: use another vector minElem to record each minimal value at every stack's status
     MinStack() {
-        
+
     }
     
     void push(int x) {
         minStack.push_back(x);
-        if(minStack.size()==1) minElem.push_back(x);
-        else minElem.push_back(min(minElem.back(),x));
+        if(minStack.size() == 1) minElem.push_back(x);
+        else minElem.push_back(min(minElem.back(), x));
     }
     
     void pop() {
@@ -27,6 +29,9 @@ public:
     int getMin() {
         return minElem.back();
     }
+private:
+    vector<int> minStack;
+    vector<int> minElem;
 };
 
 /**
