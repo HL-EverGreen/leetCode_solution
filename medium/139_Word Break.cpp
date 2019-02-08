@@ -1,21 +1,23 @@
 class Solution {
 public:
-    bool wordBreak(string s, vector<string>& wordDict) {//dp
-        //dp[i] presents whether there is any existing word in dictionary ends with s[i-1]
-        if(wordDict.size()==0) return false;
-        int s_size=s.size();
-        vector<bool> dp(s_size+1,false);
-        dp[0]=true;
-        for(int i=1;i<=s_size;i++){
-            for(int j=i-1;j>=0;j--){
-                if(dp[j]){
-                    if(find(wordDict.begin(),wordDict.end(),s.substr(j,i-j))!=wordDict.end()){
-                        dp[i]=true;
-                        break;
-                    }
-                }
+    bool wordBreak(string s, vector<string>& wordDict) {
+        // string & DP
+        // time complexity: O(k * n^2), k is the number of words in dictionary, n is the s.length()
+        // space complexity: O(n)
+        // 0ms, beats 100%
+        
+        // existBreak[i] presents whether s.substr(0, i) is a word break
+        int sSize = s.length();
+        vector<bool> existBreak(sSize + 1, false);
+        existBreak[0] = true;
+        for(int i = 1; i <= sSize; i++) {
+            for(int j = i - 1; j >= 0; j--) {
+                if(existBreak[j] && find(wordDict.begin(), wordDict.end(), s.substr(j, i - j)) != wordDict.end()) {
+                    existBreak[i] = true;
+                    break;
+                } 
             }
         }
-        return dp[s_size];
+        return existBreak[sSize];
     }
 };
