@@ -9,10 +9,21 @@
  */
 class Solution {
 public:
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {//binary tree recursive
-        if(!root || root==p || root==q) return root;
-        TreeNode* left=lowestCommonAncestor(root->left,p,q);
-        TreeNode* right=lowestCommonAncestor(root->right,p,q);
-        return !left?right:!right?left:root; //如果p,q在root两边被找到，则返回root，若只有一边发现了p、q，则返回该边返回的值
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        // binary tree
+        // time complexity: normal traverse time
+        // 24ms, beats 100%
+        
+        // Main idea:
+        // 1. return value are either NULL or possible lowest common ancestor
+        // 2. if left is null, then return right
+        // 3. if right is null, then return left
+        // 4. if both are not null, return root
+        if(!root || root == p || root == q) return root;
+        TreeNode* left = lowestCommonAncestor(root->left, p, q);
+        TreeNode* right = lowestCommonAncestor(root->right, p, q);
+        if(!left) return right;
+        else if(!right) return left;
+        else return root;
     }
 };
