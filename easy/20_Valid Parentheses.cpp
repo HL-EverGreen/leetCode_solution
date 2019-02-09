@@ -1,9 +1,13 @@
 class Solution {
 public:
-    bool isValid(string s) {//stack
-        stack<char> mysta;
-        int s_size=s.size();
-        for(char& ch:s){    // can use (char& ch:s) instead of (int i=0;i<s_size;i++)
+    bool isValid(string s) {
+        // parentheses & stack
+        // time complexity: O(n), space complexity: O(n)
+        // 4ms, beats 100%
+        
+        stack<char> sta;
+        for(auto ch : s) {
+            // maybe a more clear style
             /*
             if(!mysta.empty()){
                 if(mysta.top()=='[' && ch==']'
@@ -16,17 +20,16 @@ public:
             mysta.push(ch);
             */
             
-            //a better logic
-            if((ch=='[') || (ch=='{') || (ch=='('))
-                mysta.push(ch);
-            else if(mysta.empty())
+            if(ch == '(' || ch == '[' || ch == '{') 
+                sta.push(ch);
+            else if(sta.empty()) 
                 return false;
-            else if((mysta.top()=='[' && ch==']') || (mysta.top()=='(' && ch==')') || (mysta.top()=='{' && ch=='}'))
-                mysta.pop();
-            else
+            else if((ch == ')' && sta.top() == '(') || (ch == ']' && sta.top() == '[') || (ch == '}' && sta.top() == '{')) 
+                sta.pop();
+            else 
                 return false;
         }
-        if(mysta.empty()) return true;
+        if(sta.empty()) return true;
         else return false;
     }
 };
