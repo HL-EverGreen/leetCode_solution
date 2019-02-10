@@ -9,16 +9,35 @@
  */
 class Solution {
 public:
-    // binary tree
-
-    // method 1
-    // Time Complexity: O(n)
-    // Top down 1
     int maxDepth(TreeNode* root) {
-        if(root == nullptr) {
-            return 0;
-        } else return 1 + max(maxDepth(root->left), maxDepth(root->right));
+        // binary tree
+        // time complexity: normal traverse time, space complexity: O(1) + stack memory
+        // 20ms, beats 98.76%
+        
+        // recursive, kind of DFS?
+        if(!root) return 0;
+        return 1 + max(maxDepth(root->left), maxDepth(root->right));
+        
+        
+        // BFS
+        /*
+        if(root == NULL) return 0;
+        int res = 0;
+        queue<TreeNode *> q;
+        q.push(root);
+        while(!q.empty()) {
+            ++ res;
+            for(int i = 0, n = q.size(); i < n; ++ i) {
+                TreeNode *p = q.front();
+                q.pop();
+                if(p -> left != NULL) q.push(p -> left);
+                if(p -> right != NULL) q.push(p -> right);
+            }
+        }
+        return res;
+        */
     }
+    
     
     // method 2
     // Time complexity: O(n)
