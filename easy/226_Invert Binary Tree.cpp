@@ -10,18 +10,14 @@
 class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
-        if(root==NULL||(root->left==NULL && root->right==NULL))
-        //if(!root)
-            return root;
-        if(root->left!=NULL)
-            invertTree(root->left);
-        if(root->right!=NULL)
-            invertTree(root->right);
-        TreeNode* tempNode=NULL;
-        tempNode=root->left;
-        root->left=root->right;
-        root->right=tempNode;
-        return root;
+        // binary tree
+        // time complexity: normal traverse time, space complexity: O(1) + stack memory
+        // 4ms, beats 100%
         
+        if(!root) return nullptr;
+        swap(root->left, root->right);
+        invertTree(root->left);
+        invertTree(root->right);
+        return root;
     }
 };
