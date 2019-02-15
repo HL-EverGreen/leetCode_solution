@@ -1,6 +1,14 @@
 class Solution {
 public:
     bool verifyPreorder(vector<int>& preorder) {
+        // BST
+        // time complexity: O(n), space complexity: O(n)
+        // 36ms, beats 100%
+        
+        // main idea: 
+        // maintain the lower_bound value
+        // when we find an element greater than its former elements, we can set the new lower_bound, and a normal BST won't appear any emelent less than that in the following array
+        
         /*
         To translate this into code: looking for the trend of numbers, if it’s decreasing, it’s still traversing the left child node 
         all the way down, we push the value into stack. When we read a value greater than the last one, we know the current value 
@@ -11,19 +19,19 @@ public:
         Then we keep reading the serialized array, in any case we see any value not greater than the lower bound, we return false. 
         Lower bound is updated whenever we read a right child node’s value.
         */
-        stack<int> stk;
-        int lower_bound=INT_MIN;
-        for(int i=0;i<preorder.size();i++){
-            if(stk.empty() || preorder[i]<stk.top()){//use stk.top() instead preorder[i-1] can save time. stk.top() always = preorder[i-1]
-                if(preorder[i]<lower_bound) return false;
-                stk.push(preorder[i]);
-            }else{
-                while(!stk.empty() && preorder[i]>stk.top()){
-                    lower_bound=stk.top();
-                    stk.pop();
+        
+        stack<int> node;
+        int lower_bound = INT_MIN, size = preorder.size();
+        for(int i = 0; i < size; i++) {
+            if(node.empty() || preorder[i] < node.top()) {              // still go into the left subtree
+                if(preorder[i] < lower_bound) return false;             
+            } else {
+                while(!node.empty() && preorder[i] > node.top()) {
+                    lower_bound = node.top();                           // go into the right side, won't less than the top() value
+                    node.pop();
                 }
-                stk.push(preorder[i]);
             }
+            node.push(preorder[i]);
         }
         return true;
     }
