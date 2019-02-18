@@ -9,16 +9,27 @@ public:
         // 2. in each round, if stack.top() is lower, pop, until find the first greater element or stack is empty (no warmer day)
         
         int size = T.size();
+        if(size == 0) return {};
         vector<int> res(size, 0);
-        stack<pair<int, int>> day;
-        day.push({T[size - 1], size - 1});
-        for(int i = size - 2; i >= 0; i--) {
-            if(T[i] < day.top().first) res[i] = day.top().second - i;
-            while(!day.empty() && T[i] >= day.top().first) day.pop();           // pop lower temperature days
-            if(!day.empty()) res[i] = day.top().second - i;
-            day.push({T[i], i});
+        stack<int> day;
+        for(int i = size - 1; i >= 0; i--) {
+            while(!day.empty() && T[i] >= T[day.top()]) day.pop();
+            if(!day.empty()) res[i] = day.top() - i;
+            day.push(i);
         }
         return res;
+
+        // int size = T.size();
+        // vector<int> res(size, 0);
+        // stack<pair<int, int>> day;
+        // day.push({T[size - 1], size - 1});
+        // for(int i = size - 2; i >= 0; i--) {
+        //     if(T[i] < day.top().first) res[i] = day.top().second - i;
+        //     while(!day.empty() && T[i] >= day.top().first) day.pop();           // pop lower temperature days
+        //     if(!day.empty()) res[i] = day.top().second - i;
+        //     day.push({T[i], i});
+        // }
+        // return res;
         
         // a nearly O(n) time and O(1) space solution
         /*
