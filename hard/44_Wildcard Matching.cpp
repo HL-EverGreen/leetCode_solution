@@ -2,7 +2,7 @@ class Solution {
 public:
     bool isMatch(string s, string p) {
         // string & DFS
-        // 24ms, beats 97.36% 
+        // 28ms, beast 100%
         
         return dfs(s, p, 0, 0) > 1;
     }
@@ -12,18 +12,17 @@ public:
     // 1: unmatched without reaching the end of s
     // 2: matched
     int dfs(string& s, string& p, int si, int pi) {
-        if (si == s.size() && pi == p.size()) return 2;
-        if (si == s.size() && p[pi] != '*') return 0;
-        if (pi == p.size()) return 1;
-        if (p[pi] == '*') {
-            if (pi + 1 < p.size() && p[pi + 1] == '*') 
-                return dfs(s, p, si, pi + 1); // skip duplicate '*'
-            for(int i = 0; i <= s.size() - si; ++i) {
+        if(si == s.length() && pi == p.length()) return 2;
+        if(si == s.length() && p[pi] != '*') return 0;
+        if(pi == p.length()) return 1;
+        if(p[pi] == '*') {
+            while(pi < p.length() - 1 && p[pi + 1] == '*') pi++;        // skip duplicate '*'
+            for(int i = 0; i <= s.length() - si; i++) {                 // start 0 because '*' may stand for nothing
                 int ret = dfs(s, p, si + i, pi + 1);
-                if (ret == 0 or ret == 2) return ret; 
+                if(ret == 0 || ret == 2) return ret;
             }
         }
-        if (p[pi] == '?' || s[si] == p[pi])
+        else if(p[pi] == '?' || p[pi] == s[si]) 
             return dfs(s, p, si + 1, pi + 1);
         return 1;
     }
