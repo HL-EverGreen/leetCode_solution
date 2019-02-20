@@ -10,7 +10,7 @@ public:
         unordered_map<int, int> mp;
         int res = 0;
         for(auto num : nums) {
-            if(mp[num]) { continue; }
+            if(mp[num]) { continue; }                   // can't use mp.find(num)!= mp.end(), because some mp pair value maybe 0 but it exists
             res = max(res, mp[num] = mp[num + mp[num + 1]] = mp[num - mp[num - 1]] = mp[num + 1] + mp[num - 1] + 1);
         }
         return res;
