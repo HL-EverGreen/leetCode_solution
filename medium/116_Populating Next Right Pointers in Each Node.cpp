@@ -8,18 +8,28 @@
  */
 class Solution {
 public:
-    void connect(TreeLinkNode *root) {
-        //constant space || iterative
-        if(!root) return;
-        while(root->left){
-            TreeLinkNode* tmp=root;
+    Node* connect(Node* root) {
+        // binary tree
+        // time complexity: O(n), space complexity: O(1)
+        // 68ms, beats 33%
+
+        // constant space || iteration
+        // main idea:
+        // 1. cur is the most left node in each layer
+        // 2. if cur && cur->left, begin connect cur->left layer
+        // 3. update cur until cur->left == nullptr (connect all layers)
+        if(!root) return nullptr;
+        Node* cur = root;
+        while(cur->left) {
+            Node* tmp = cur;                        // cur层遍历
             while(tmp) {
-                tmp->left->next=tmp->right;
-                if(tmp->next) tmp->right->next=tmp->next->left;
-                tmp=tmp->next;
+                tmp->left->next = tmp->right;
+                if(tmp->next) tmp->right->next = tmp->next->left;
+                tmp = tmp->next;
             }
-            root=root->left;
+            cur = cur->left;
         }
+        return root;
 
         //constant space || recursive
         /*
