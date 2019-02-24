@@ -1,33 +1,51 @@
-/**
- * Definition for binary tree with next pointer.
- * struct TreeLinkNode {
- *  int val;
- *  TreeLinkNode *left, *right, *next;
- *  TreeLinkNode(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
- * };
- */
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* left;
+    Node* right;
+    Node* next;
+
+    Node() {}
+
+    Node(int _val, Node* _left, Node* _right, Node* _next) {
+        val = _val;
+        left = _left;
+        right = _right;
+        next = _next;
+    }
+};
+*/
 class Solution {
 public:
-    void connect(TreeLinkNode *root) {  //binary tree
-        //main idea is to traverse binary tree levelly
-        TreeLinkNode *prev=NULL, *head=NULL, *cur=root; //#prev# used to store the last node in this level
-                                                        //#head# used to store the first node in this level
-        while(cur){
-            while(cur){
-                if(cur->left){
-                    if(prev) prev->next=cur->left;
-                    else head=cur->left;
-                    prev=cur->left;
+    Node* connect(Node* root) {
+        // binary tree
+        // time complexity: O(n), space complexity: O(1)
+        // main idea:
+        // Traverse binary tree levelly, and keep the most left node and prev node
+        // When start at next level, set cur to recorded most left node in next level
+        
+        // #prev# used to store the last node in current traverse in this level
+        // #head# used to store the first node in this level
+        Node *prev = nullptr, *head = nullptr, *cur = root;
+        while(cur) {
+            while(cur) {
+                if(cur->left) {
+                    if(prev) prev->next = cur->left;                // connect
+                    else head = cur->left;                          // keep head node
+                    prev = cur->left;                              
+                } 
+                if(cur->right) {
+                    if(prev) prev->next = cur->right;               // connect
+                    else head = cur->right;                         // keep head node
+                    prev = cur->right;
                 }
-                if(cur->right){
-                    if(prev) prev->next=cur->right;
-                    else head=cur->right;
-                    prev=cur->right;
-                }
-                cur=cur->next;
+                cur = cur->next;
             }
-            cur=head; //switch to the next level
-            prev=head=NULL;
+            cur = head;                                             // switch to the next level's first node
+            prev = head = nullptr;
         }
+        return root;
     }
 };
