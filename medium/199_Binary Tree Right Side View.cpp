@@ -10,6 +10,33 @@
 class Solution {
 public:
     vector<int> rightSideView(TreeNode* root) {
+        // binary tree
+
+        // method 1: modified traversal
+        // time complexity: O(n), space complexity: O(1) + stack memory
+        // 4ms, beats 100%
+        
+        // main idea:
+        // traverse order: root->right->left, only select first countered node in its depth to be added into res
+        
+        vector<int> res;
+        rightSideView(root, res, 1);
+        return res;
+    }
+    
+    void rightSideView(TreeNode* root, vector<int>& res, int depth) {
+        if(!root) return;
+        if(depth > res.size()) res.push_back(root->val);
+        rightSideView(root->right, res, depth + 1);
+        rightSideView(root->left, res, depth + 1);
+    }
+
+
+    // method 2
+    // level order traverse and push last one in each level
+    // time complexity: O(n), space complexity: O(n) + stack memory
+    /*
+    vector<int> rightSideView(TreeNode* root) {
         vector<vector<int>> value;
         vector<int> res;
         readTree(value, root, 0);
@@ -28,4 +55,5 @@ public:
             readTree(value, root->right, depth+1);
         }
     }
+    */
 };
