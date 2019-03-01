@@ -10,18 +10,21 @@
 class Solution {
 public:
     TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
-        //because we need to find the inorder successor, which means find the least element that bigger than p->val
-        //so when root->val<=p, update root=root->right; when root->val>p, save the root->val,
-        //and update root=root->left to find if there is smaller element still bigger than p->val
+        // BST
+        // time complexity: O(n), space complexity: O(1)
+        // 40ms, beats 99.25%
+        
+        // main idea:
+        // Find succ is the same as find the least element greater than p->val
+        // So when root->val <= p->val, set root to root->right
+        // When root->val > p->val, set succ = root, then root = root->left
         if(!root || !p) return nullptr;
-        TreeNode* succ=nullptr;
-        int target=p->val;
-        while(root){
-            if(root->val<=target){
-                root=root->right;
-            }else{
-                succ=root;
-                root=root->left;
+        TreeNode* succ = nullptr;
+        while(root) {
+            if(root->val <= p->val) root = root->right;
+            else {
+                succ = root;
+                root = root->left;
             }
         }
         return succ;
