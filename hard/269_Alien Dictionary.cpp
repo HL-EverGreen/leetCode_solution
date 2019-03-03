@@ -1,6 +1,59 @@
 class Solution {
 public:
-    string alienOrder(vector<string>& words) { //pre_succ_legal_order
+    string alienOrder(vector<string>& words) {
+        // topological sort & BFS
+        // 8ms, beats 99.59%
+        
+        // main idea:
+        // Use #inDeg# to record each char's in degree, and use #pre# to record each char's successors
+        // Push char whose in degree == 0 into queue, and check each queue.front() char's succ, update their in degree after poping char.
+        // Check if res.length() == all distinct elements, to avoid cycle in relationship
+        
+        if(words.size() == 0) return "";
+        unordered_map<char, int> inDeg;
+        unordered_map<char, unordered_set<char>> pre;
+        
+        // Initialize
+        for(auto& s : words) {
+            for(auto& ch : s) inDeg[ch] = 0;
+        }
+        
+        // Record indegree and insert successors of each char
+        int size = words.size();
+        for(int i = 0; i < size - 1; i++) {
+            string cur = words[i], next = words[i + 1];
+            int len = min(cur.length(), next.length());
+            for(int j = 0; j < len; j++) {
+                if(cur[j] != next[j]) {
+                    if(pre[cur[j]].insert(next[j]).second) inDeg[next[j]]++;
+                    break;
+                }
+            }
+        }
+        
+        // Choose char whose in degree == 0, where we start
+        string res;
+        queue<char> q;
+        for(auto& i : inDeg) {
+            if(i.second == 0) q.push(i.first);
+        }
+        
+        // Check and update successors of each char
+        while(!q.empty()) {
+            char cur = q.front();
+            q.pop();
+            res += cur;
+            for(auto& succ : pre[cur]) {
+                if(--inDeg[succ] == 0) q.push(succ);
+            }
+        }
+        
+        // Check whether cycle exists
+        return res.length() == inDeg.size() ? res : "";
+
+
+        // another method, also track predecessors besides successors
+        /*
         unordered_map<char,set<char>> suc,pre;
         set<char> chars;
         string fi;
@@ -30,5 +83,6 @@ public:
             }
         }
         return res.size()==chars.size()?res:"";
+        */
     }
 };
