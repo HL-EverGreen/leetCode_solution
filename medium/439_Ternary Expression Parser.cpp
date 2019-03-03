@@ -26,3 +26,34 @@ public:
         return expression.substr(i, 1);                                 // if a single value
     }
 };
+
+// Ternary expression to binary tree
+// Using stack
+/*
+struct TreeNode {
+    char val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(char x): val(x), left(nullptr), right(nullptr){}       // constructor
+};
+ 
+TreeNode* ternaryToBT(string input) {
+    TreeNode* root = new TreeNode(input[0]);
+    tmp = root;
+    stack<TreeNode*> mystack;
+    for (int i = 1; i < input.length(); i += 2) {
+        if (input[i] == '?') {
+            tmp->left = new TreeNode(input[i+1]);
+            mystack.push(tmp);
+            tmp = tmp->left;
+        }
+        else if (input[i] == ':') {
+            tmp = mystack.top();
+            mystack.pop();
+            tmp->right = new TreeNode(input[i+1]);
+            tmp = tmp->right;
+        }
+    }
+    return root;
+}
+*/
