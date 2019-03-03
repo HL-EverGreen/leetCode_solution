@@ -40,3 +40,45 @@ int main(){
     getchar();
     return 0;
 }
+
+// 用数组实现priority_queue (heap)
+// e.g. min_heap
+/*
+int heap[MAXN], size_heap = 0;
+//插入数值
+void push(int x){
+    int i = size_heap++;
+    while(i > 0){
+        //父节点的编号
+        int p = (i-1)/2;
+        //如果大小关系满足，则退出循环
+        if(heap[p] <= x) break;
+        //将父节点放下，把自己向上提
+        heap[i] = heap[p];
+        i = p;
+    }
+    heap[i] = x;
+}
+
+//获取最小值，并删除最小值
+int top(){
+    //最小值
+    int ret = heap[0];
+    //最后一个节点
+    int x = heap[--size_heap];
+    int i = 0;
+    while(2*i+1 < size_heap){
+        int a = 2*i+1, b = 2*i+2;
+        //比较两个儿子的值
+        if(b < size_heap && heap[b] < heap[a]) a = b;
+        //满足大小关系
+        if(heap[a] >= x) break;
+        //将数值小的那个儿子提上来
+        heap[i] = heap[a];
+        i = a;
+    }
+    heap[i] = x;
+    
+    return ret;
+}
+*/
