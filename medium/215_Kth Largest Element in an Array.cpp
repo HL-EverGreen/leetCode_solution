@@ -31,3 +31,24 @@ public:
         return pq.top();    
     }
 };
+
+
+// quick select like quick sort
+/*
+int i, m,n, pivot, head =0, tail=nums.size()-1, maxV;
+    
+    while(1)
+    {
+        m = head, n= tail;
+        pivot = nums[m++];
+        while(m<=n)
+        {
+            if(nums[m]>=pivot) m++;
+            else if(nums[n]<pivot) n--;
+            else {swap(nums[m++], nums[n--]);}
+        }
+        if(m-head == k) return pivot;
+        else if(m-head < k) {k -= (m-head); head = m;  }
+        else {tail = m-1;head = head+1;}
+    }
+*/
