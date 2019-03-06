@@ -1,6 +1,44 @@
 class Solution {
 public:
-    vector<int> findOrder(int numCourses, vector<pair<int, int>>& prerequisites) {//bfs
+    vector<int> findOrder(int numCourses, vector<pair<int, int>>& prerequisites) {
+        // topological sort
+        // time complexity: O(n^2), actually O(n), space complexity: O(n)
+        // 24ms, beats 92.75%
+        
+        // main idea:
+        // Use queue to store nodes whose in degree is 0
+        // When pop queue's top, check its successor (in vector<unordered_set<int>>), and reduce their in degree by 1. 
+        // If some's in degree becomes 0, push it in queue
+        // Check number of nodes in total being pushed in queue, whether == numCourses
+        vector<int> count(numCourses, 0);
+        vector<unordered_set<int>> pre(numCourses);
+        for(auto& p : prerequisites) {
+            if(pre[p.second].insert(p.first).second) count[p.first]++;
+        }
+        
+        queue<int> q;
+        vector<int> res;
+        for(int i = 0; i < numCourses; i++) {
+            if(count[i] == 0) q.push(i);
+        }
+        
+        while(!q.empty()) {
+            int cur = q.front();
+            q.pop();
+            res.push_back(cur);
+            for(auto& succ : pre[cur]) {
+                if(--count[succ] == 0) q.push(succ);
+            }
+        }
+        
+        if(res.size() == numCourses) return res;
+        else return {};
+    }
+
+    
+    // BFS
+    /*
+    vector<int> findOrder(int numCourses, vector<pair<int, int>>& prerequisites) {
         vector<unordered_set<int>> graph=makeGraph(numCourses,prerequisites);
         vector<int> degrees=getDegree(numCourses,graph);
         vector<int> res;
@@ -34,6 +72,8 @@ public:
                 degrees[elem]++;
         return degrees;
     }
+    */
+
 
     //DFS
     /*
