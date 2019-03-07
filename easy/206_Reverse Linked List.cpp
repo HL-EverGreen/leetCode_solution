@@ -8,8 +8,39 @@
  */
 class Solution {
 public:
+    // linked list
+    
+    // iterative
+    // 8ms, beats 100%
     ListNode* reverseList(ListNode* head) {
-        /*
+        ListNode *prev = nullptr, *cur = head, *next;
+        while(cur) {
+            next = cur->next;
+            cur->next = prev;
+            prev = cur;
+            cur = next;
+        }
+        return prev;
+    }
+    
+    // recursive
+    // 16ms, beats 13.06%
+    /*
+    ListNode* reverseList(ListNode* head) {
+        return reverseList(head, nullptr);
+    }
+    
+    ListNode* reverseList(ListNode* cur, ListNode* prev) {
+        if(!cur) return prev;
+        ListNode* next = cur->next;
+        cur->next = prev;
+        return reverseList(next, cur);
+    }
+    */
+
+    // first step :)
+    /*
+    ListNode* reverseList(ListNode* head) {
         vector<int> temp;
         ListNode* temphead=head;
         ListNode* reshead=head;
@@ -26,19 +57,6 @@ public:
             i++;
         }
         return reshead;
-        */
-        
-        //use pointer exchange
-        ListNode* curr=head;
-        ListNode* prev=NULL;
-        ListNode* next=NULL;
-        
-        while(curr!=NULL){
-            next=curr->next;
-            curr->next=prev;
-            prev=curr;
-            curr=next;
-        }
-        return prev;
     }
+    */
 };
