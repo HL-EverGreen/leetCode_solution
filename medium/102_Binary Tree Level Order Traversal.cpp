@@ -9,6 +9,11 @@
  */
 class Solution {
 public:
+    // binary tree
+
+    // method 1:
+    // DFS
+    // 8ms, beats 100%
     vector<vector<int>> res;
     vector<vector<int>> levelOrder(TreeNode* root) {
         readTree(root,0);
@@ -24,5 +29,30 @@ public:
             readTree(root->right,depth+1);
         }
     }
+
+
+    // method 2:
+    // BFS
+    // 8ms, beats 100%
+    /*
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> res;
+        queue<TreeNode*> q;
+        if(!root) return res;
+        q.push(root);
+        while(!q.empty()) {
+            res.push_back(vector<int>());
+            int size = q.size();
+            for(int i = 0; i < size; i++) {
+                auto cur = q.front();
+                q.pop();
+                res.back().push_back(cur->val);
+                if(cur->left) q.push(cur->left);
+                if(cur->right) q.push(cur->right);
+            }
+        }
+        return res;
+    }
+    */
     
 };
