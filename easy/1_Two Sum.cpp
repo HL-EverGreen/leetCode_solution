@@ -6,18 +6,15 @@ public:
         // 4ms, beats 99.95%
         
         int size = nums.size();
-        vector<int> res;
-        if(size <= 1) { return res; }
-        unordered_map<int, int> myMap;
+        unordered_map<int, int> m;
         
-        for(int i = 0; i < size; i++){
-            if(myMap.find(target - nums[i]) != myMap.end()){
-                res.push_back(myMap[target - nums[i]]);
-                res.push_back(i);
-                return res;
+        for(int i = 0; i < size; i++) {
+            if(m.find(target - nums[i]) != m.end()) {
+                return {i, m[target - nums[i]]};
             }
-            myMap[nums[i]] = i;
+            m[nums[i]] = i;
         }
+        return {};
 
         // Brute force, O(n^2);
         /*
