@@ -10,7 +10,7 @@ class Solution {
 public:
     // list & priority queue
     // time complexity: O(nlogn), n is the total number of nodes, space complexity: O(k), k is the number of list
-    // 16ms, beats 99%
+    // 20ms, beats 99.1%
     
     // method 1: using priority queue
     struct compare{
@@ -36,9 +36,15 @@ public:
         while(!nextNode.empty()) {
             ListNode* next = nextNode.top();
             nextNode.pop();
-            cur->next = next;
-            cur = next;
-            if(next->next != nullptr) nextNode.push(next->next);
+            cur->next = next;                    // Connect `cur` with `next` piece
+            if(!nextNode.empty()) {
+                int gap = nextNode.top()->val;                              // Smallest value in another list
+                while(next->next != nullptr && next->next->val < gap) {     // Skip all value which smaller than `gap`
+                    next = next->next;
+                }
+            }
+            cur = next;                                                     // Set current tail
+            if(next->next != nullptr) nextNode.push(next->next);            // If still has unconnected list, push to `pq`
         }
         return dummy->next;
     }
