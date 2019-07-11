@@ -9,6 +9,20 @@
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
+        // linked list
+        // time complexity: O(n), space complexity: O(1)
+
+        // Much more elegant!!!
+        ListNode **pp = &head, *a, *b;
+        while ((a = *pp) && (b = a->next)) {
+            a->next = b->next;
+            b->next = a;
+            *pp = b;
+            pp = &(a->next);
+        }
+        return head;
+
+        /*
         ListNode* cur=head;
         ListNode* tmp=head;
         ListNode* final_head=head;
@@ -25,6 +39,6 @@ public:
             cur=cur->next;
         }
         return final_head;
-        
+        */
     }
 };
