@@ -8,7 +8,7 @@ public:
         // 4ms, 98.74%
         // better binary search format can be seen in method 3
 
-        int left = 0, right = nums.size() - 1;
+        int left = 0, right = nums.size();
         while(left < right) {
             int mid = left + (right - left) / 2;
             if(nums[mid] == target) {
@@ -20,11 +20,7 @@ public:
             }
         }
         
-        // check if target is the biggest one
-        if(target > nums.back()) {
-            return right + 1;
-        }
-        else return right;
+        return right;
 
 
         // method 2
