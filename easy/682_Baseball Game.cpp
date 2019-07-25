@@ -1,17 +1,22 @@
 class Solution {
 public:
     int calPoints(vector<string>& ops) {
-        // array
+        // stack
         // time complexity: O(n), space complexity: O(n)
-        // 8ms, beats 100%
+        // 4ms, beats 97.31%
         
-        vector<int> score;
-        for(auto& ch : ops) {
-           if(ch == "+") score.push_back(score[score.size() - 2] + score.back());
-           else if(ch == "D") score.push_back(score.back() * 2);
-           else if(ch == "C") score.pop_back();
-           else score.push_back(atoi(ch.c_str()));
+        vector<int> stk;
+        for(auto cur : ops) {
+            if(cur == "C" && !stk.empty()) {
+                stk.pop_back();
+            } else if(cur == "D" && !stk.empty()) {
+                stk.push_back(2 * stk.back());
+            } else if(cur == "+" && stk.size() >= 2) {
+                stk.push_back(stk.back() + stk[stk.size() - 2]);
+            } else if(cur != "C" && cur != "D" && cur != "+") {
+                stk.push_back(stoi(cur));
+            }
         }
-        return accumulate(score.begin(), score.end(), 0);
+        return accumulate(stk.begin(), stk.end(), 0);
     }
 };
