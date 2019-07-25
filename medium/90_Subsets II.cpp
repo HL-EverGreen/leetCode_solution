@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
         // array
-        // time complexity: O(n^2). space complexity: O(2^n)
+        // time complexity: O(2^n). space complexity: O(2^n)
         // 8ms, beats 57.14% 
         
         // method 1
