@@ -10,7 +10,7 @@
 class Solution {
 public:
     TreeNode* constructFromPrePost(vector<int>& pre, vector<int>& post) {
-        // Binary tree
+        // Binary tree & stack
         // time complexity: O(n), space complexity: O(n)
         // 8ms, beats 90.76%
         
