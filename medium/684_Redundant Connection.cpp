@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<int> findRedundantConnection(vector<vector<int>>& edges) {
         // union find
-        // time complexity: O(n^2), space complexity: O(2000)
+        // time complexity: O(n^2), space complexity: O(n)
         // 4ms, beats 99.11%
         
         // Use union find to group points which is connected.
