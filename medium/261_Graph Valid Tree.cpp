@@ -1,40 +1,37 @@
 class Solution {
 public:
-    /*
-    bool validTree(int n, vector<pair<int, int>>& edges) {//dfs
-        if(edges.size()!=n-1) return false;
-        vector<bool> isVisited(n,false);
-        vector<vector<int>> graph(n);
-        for(auto e:edges){
-            graph[e.first].push_back(e.second);
-            graph[e.second].push_back(e.first);
+    bool validTree(int n, vector<vector<int>>& edges) {
+        // union find
+        // time complexity: O(n^2), space complexity: O(n)
+        // 12ms, beats 98.93%
+        
+        // Main idea:
+        // If edges.size() != n - 1, directly return false;
+        // Use union find to check whether two node has same parent, if so, exists circle
+
+        if(edges.size() != n - 1) { return false; }     // If size < n - 1, then must be disconnected, if size > n - 1, then must exist circle
+        vector<int> parent(n);
+        for(int i = 0; i < n; i++) {
+            parent[i] = i;
         }
-        dfs(graph,isVisited,0);
-        for(auto i:isVisited)
-            if(!i) return false;
+        
+        for(auto edge : edges) {
+            int f = edge[0], s = edge[1];
+            // while(f != parent[f]) { f = parent[f]; }
+            // while(s != parent[s]) { s = parent[s]; }
+            f = find(parent, f);
+            s = find(parent, s);
+            if(s == f) { return false; }    // Two nodes are already connected, existed circle
+            parent[f] = s;                  // Connect two nodes
+        }
         return true;
     }
     
-    void dfs(vector<vector<int>>& graph, vector<bool>& isVisited, int node){// Should be vector<vector<int>>& graph rather than <vector<vector<int>> graph
-                                                                            //Otherwise memory would exceed the limit(use & to transfer the address)
-        if(isVisited[node]) return;
-        isVisited[node]=true;
-        for(int num:graph[node])
-            dfs(graph,isVisited,num);
-    }
-    */
-    
-    bool validTree(int n, vector<pair<int, int>>& edges) {//find two nums' topest parent, a general way to detect circle
-        vector<int> num(n);
-        for(int i=0;i<n;i++) num[i]=i;
-        for(auto e:edges){         //determine if there exists circle
-            int f=e.first;
-            int s=e.second;
-            while(f!=num[f]) f=num[f]; //to find the topest parent
-            while(s!=num[s]) s=num[s]; 
-            if(f==s) return false;     //if two nums' topest parent are the same, then there exists a circle
-            num[s]=f;
+    // another helper function
+    int find(vector<int>& parent, int p) {
+        if(p != parent[p]) {
+            parent[p] = find(parent, parent[p]);
         }
-        return edges.size()==n-1;  //determine every node is connected
+        return parent[p];
     }
 };
