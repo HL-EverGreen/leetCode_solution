@@ -7,6 +7,13 @@ public:
         
         // Main idea:
         // Use priority queue to keep current hightest height and end pos.
+        // Can also see: https://briangordon.github.io/2014/08/the-skyline-problem.html
+        // From this article, we could implement priority_queue<pair<int, int>>, (<height, end pos>)
+        // 1. We sort all critical points. And we loop from start pos to end pos.
+        // 2. When encounter new building, push it into priority queue.
+        //    While current pos > heap top building's end pos, pop this building
+        // 3. For all critical points, we can use current height in priority queue to configure result.
+        //    So that, we didn't need to loop every building for each critical points. O(n^2) => O(nlogn)
 
         vector<vector<int>> res;
         int cur = 0, cur_X, cur_H, len = buildings.size();
@@ -32,7 +39,7 @@ public:
                     cur++;
                 }
             }
-            
+
             // Set height to the topest building's height
             cur_H = liveBlg.empty() ? 0 : liveBlg.top().first;
             if(res.empty() || (res.back()[1] != cur_H) ) res.push_back({cur_X, cur_H});
