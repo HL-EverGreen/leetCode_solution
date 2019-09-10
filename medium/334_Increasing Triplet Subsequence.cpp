@@ -13,8 +13,29 @@ public:
         for(auto num : nums) {
             if(num > se) return true;       // Exist third element > second element, return true
             if(num > fi) se = min(se, num); // Update smaller second element
-            fi = min(fi, num);              // Update smaller first element
+            else fi = min(fi, num);         // Update smaller first element
         }
         return false;
     }
 };
+
+// Not only to triplet, the main idea is good: num in each iteration can only be used to update one element
+public boolean increasingTriplet(int[] nums) {
+    int k = 3;
+    int[] small = new int[k-1];
+    for (int i = 0; i < small.length; i++) {
+        small[i] = Integer.MAX_VALUE;
+    }
+    for (int num : nums) {
+        int i = 0;
+        while (i < small.length && small[i] < num) {
+            i++;
+        }
+        if (i < small.length) {
+            small[i] = num;
+        } else {
+            return true;
+        }
+    }
+    return false;
+}
