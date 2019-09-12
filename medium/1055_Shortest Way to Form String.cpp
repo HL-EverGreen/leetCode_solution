@@ -8,24 +8,28 @@ public:
         // time complexity: O(mn), space complexity: O(1)
         // 0ms, beats 100%
         
-        // int n = source.size();
-        // int res = 0;
-        // for(int ti = 0, si = 0; ti < target.size();) {
-        //     while(si < n && source[si] != target[ti]) ++si;     // Not fount current char
-        //     if(si < n) ++si, ++ti;  // Successfully match
-        //     else {      // No match, start new round
-        //         if(++res > ti) return -1;
-        //         si = 0;
-        //     }
-        // }
-        // return res + 1;    // + 1 for initial round
+        int n = source.size();
+        int res = 0;
+        for(int ti = 0, si = 0; ti < target.size();) {
+            while(si < n && source[si] != target[ti]) ++si;     // Not fount current char
+            if(si < n) ++si, ++ti;  // Successfully match
+            else {      // No match, start new round
+                if(++res > ti) return -1;
+                si = 0;
+            }
+        }
+        return res + 1;    // + 1 for initial round
         
 
         // method 2
         // greedy
         // time complexity: O(m + n), space complexity: O(m)
         
+        // Main idea:
+        // Since in previous solution, we need to find next occurence of target[ti] in source.
+        // And we use +1 to find, it is time-consuming, we could record the next ch occurence index after current index using data structure.
         // dict[i][j] present the first occurence of 'a' + j after index i (>= i) in source
+        
         int m = source.size();
         vector<vector<int>> dict(m, vector<int>(26, -1));
         dict[m - 1][source[m - 1] - 'a'] = m - 1;
