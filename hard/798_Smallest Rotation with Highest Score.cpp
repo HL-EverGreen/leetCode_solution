@@ -8,7 +8,7 @@ public:
         // Main idea:
         // All we care about is to calculate how the score would change from K to K + 1
         //   1) Get point: Each shift can gain one point (by moving index 0 to index N - 1)
-        //   2) Lose point: We calculate for each position that how many elements start to lose point at this position.
+        //   2) Lose point: We calculate for each K that how many elements start to lose point at this K.
         // So when K++, we calculate the relative points according to K's point. So there is no need to calculate index 0's point.
         
         int N = A.size();
