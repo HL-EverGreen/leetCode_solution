@@ -3,8 +3,8 @@ public:
     typedef vector<long>::iterator iter;
     int countRangeSum(vector<int>& nums, int lower, int upper) {
         // merge sort & array pair pattern
-        // time complexity: O(nlogn), space complexity: O(1) + stack memory
-        // 
+        // time complexity: O(nlogn), space complexity: O(n) + stack memory
+        // 28ms, beats 83.02%
         
         // Similar to LC 315 and LC 493
         // Transform the input to ‘sum’ representing total sum of all elements up to now.
