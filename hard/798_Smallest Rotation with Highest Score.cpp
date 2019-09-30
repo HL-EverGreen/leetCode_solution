@@ -10,6 +10,7 @@ public:
         //   1) Get point: Each shift can gain one point (by moving index 0 to index N - 1)
         //   2) Lose point: We calculate for each K that how many elements start to lose point at this K.
         // So when K++, we calculate the relative points according to K's point. So there is no need to calculate index 0's point.
+        // *Notice: For A[i] = 0, rotation make no change for it. However, it is covered in both "get point" and "lose point"
         
         int N = A.size();
         int change[N] = {0};
