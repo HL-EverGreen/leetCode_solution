@@ -27,5 +27,13 @@ public:
             if(!p2) p2 = headA;
         }
         return p1;
+
+        // More concise version
+        ListNode* curA = headA, *curB = headB;
+        while(curA != curB) {
+            curA = curA ? curA->next : headB;
+            curB = curB ? curB->next : headA;
+        }
+        return curA;
     }
 };
