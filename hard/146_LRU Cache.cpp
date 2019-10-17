@@ -45,6 +45,40 @@ private:
     }
 };
 
+
+// My version
+class LRUCache {
+public:
+    LRUCache(int capacity) {
+        _cap = capacity;    
+    }
+    
+    int get(int key) {
+        if(!_db.count(key)) return -1;
+        refresh(key);
+        return _db[key].first;
+    }
+    
+    void put(int key, int value) {
+        if(!_db.count(key) && _lru.size() >= _cap) {    // New value and capacity is full
+            _db.erase(_lru.back());
+            _lru.pop_back();
+        }
+        refresh(key);
+        _db[key].first = value;     // Update or set new value
+    }
+private:
+    list<int> _lru;
+    unordered_map<int, pair<int, list<int>::iterator>> _db;
+    int _cap;
+    
+    // Refresh recent visit timestamp for key
+    void refresh(int key) {
+        if(_db.count(key)) _lru.erase(_db[key].second);
+        _lru.push_front(key);
+        _db[key].second = _lru.begin();
+    }
+};
 /**
  * Your LRUCache object will be instantiated and called as such:
  * LRUCache obj = new LRUCache(capacity);
