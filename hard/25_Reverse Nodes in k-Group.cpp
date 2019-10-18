@@ -8,24 +8,39 @@
  */
 class Solution {
 public:
-    ListNode* reverseKGroup(ListNode* head, int k) {//linked_list
-        if(!head || k<=1) return head;
-        int num=0;
-        ListNode* dummy=new ListNode(0);
-        dummy->next=head;
-        ListNode *cur=dummy, *nex, *prev=dummy;
-        while(cur=cur->next) num++;
-        while(num>=k){
-            cur=prev->next;
-            nex=cur->next;
-            for(int i=1;i<k;i++){
-                cur->next=nex->next;
-                nex->next=prev->next;
-                prev->next=nex;
-                nex=cur->next;
-            }
-            prev=cur;
-            num-=k;
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        // linked list
+        // time complexity: O(n), space complexity: O(1)
+        // 20ms, beats 70.19%
+        
+        // Main idea:
+        // Cal total number first, if remain number >= K, then can still reverse K.
+        // The reverse process is:
+        //     1) Find cur based on prev
+        //     2) Set node sequencely
+        //     3) Keep cur and prev not move in current round, only move next
+        //     4) When finishs current round, set prev to cur.
+        
+        ListNode* dummy = new ListNode(0), *prev = dummy, *next = nullptr;
+        ListNode* cur = head;
+        prev->next = head;
+        int N = 0;
+        
+        // Compute number of all nodes
+        while(cur) {
+            ++N; cur = cur->next;
+        }
+        
+        while(N >= k) {
+            cur = prev->next;
+            for(int i = 1; i < k; ++i) {    // Each reverse k
+                next = cur->next;
+                cur->next = next->next;
+                next->next = prev->next;
+                prev->next = next;
+            } 
+            prev = cur;
+            N -= k;
         }
         return dummy->next;
     }
