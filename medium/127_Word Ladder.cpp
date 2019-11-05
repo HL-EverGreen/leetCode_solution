@@ -8,7 +8,7 @@ public:
         // main idea:
         // Use unordered_set to store unused word
         // Push all possible word which is also in dict into queue
-        /*
+
         unordered_set<string> dict(wordList.begin(), wordList.end());
         if (dict.find(endWord) == dict.end()) return 0;
         queue<string> q;
@@ -33,48 +33,43 @@ public:
             step++;
         }
         return 0;
-        */
+        
         
         // method 2
         // Bi-BFS
-        // 32ms, beats 97.52%
+        // 28ms, beats 98.34%
         
         // main idea:
         // Start BFS from begin word and end word simultaneously
         
-        unordered_set<string> dict(wordList.begin(), wordList.end()), head, tail, *phead, *ptail;
-        if (dict.find(endWord) == dict.end()) return 0;
-        head.insert(beginWord);
-        tail.insert(endWord);
-        int ladder = 2;
-        while (!head.empty() && !tail.empty()) {
-            if (head.size() < tail.size()) {                                    // always expand from the one has less word candidate (in order to decrease space used)
-                phead = &head;
-                ptail = &tail;
-            } else {
-                phead = &tail;
-                ptail = &head;
-            }
-            unordered_set<string> temp;
-            for (auto it = phead -> begin(); it != phead -> end(); it++) {    
-                string word = *it;
-                for (int i = 0; i < word.size(); i++) {
-                    char t = word[i];
-                    for (int j = 0; j < 26; j++) {
-                        word[i] = 'a' + j;
-                        if (ptail -> find(word) != ptail -> end()) {            // find word ladder
-                            return ladder;
-                        }
-                        if (dict.find(word) != dict.end()) {
-                            temp.insert(word);
-                            dict.erase(word);
+        unordered_set<string> remain(wordList.begin(), wordList.end());
+        if(!remain.count(endWord)) return 0;
+        remain.erase(endWord);
+        
+        unordered_set<string> p1, p2;
+        p1.insert(beginWord); p2.insert(endWord);
+        int step = 2;
+        
+        while(!p1.empty() && !p2.empty()) {
+            if(p1.size() > p2.size()) swap(p1, p2);     // Expand search in the one with smaller size, to optimize the time complexity
+            unordered_set<string> next;
+            for(auto it = p1.begin(); it != p1.end(); ++it){
+                string cur = *it;
+                for(int i = 0; i < cur.length(); ++i) {
+                    char tmp = cur[i];
+                    for(int j = 0; j < 26; ++j) {
+                        cur[i] = 'a' + j;
+                        if(p2.count(cur)) return step;
+                        if(remain.count(cur)) {
+                            next.insert(cur);
+                            remain.erase(cur);
                         }
                     }
-                    word[i] = t;
+                    cur[i] = tmp;
                 }
             }
-            ladder++;
-            phead -> swap(temp);                                                // set corresponding set (head or tail) to next search set
+            swap(p1, next); // Replace current search set with new one
+            ++step;
         }
         return 0;
     }
